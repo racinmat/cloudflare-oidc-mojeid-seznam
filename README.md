@@ -1,7 +1,8 @@
 # Cloudflare Access + MojeID + Seznam.cz
 
 Návod a hotové Cloudflare Workers na napojení **MojeID** a **Seznam.cz** jako přihlašovacích metod
-(Identity Providerů) do [Cloudflare Zero Trust Access](https://developers.cloudflare.com/cloudflare-one/).
+(Identity Providerů) do Cloudflare Access, součásti platformy
+[Cloudflare One](https://developers.cloudflare.com/cloudflare-one/) (dřív Cloudflare Zero Trust).
 Oficiální dokumentace obou služeb tohle přímo nepokrývá a člověk narazí na pár nečekaných zdí — tenhle
 repo je zápis toho, jak se přes ně dostat.
 
@@ -27,16 +28,7 @@ ne OpenID Connect — žádný `id_token`, žádné JWKS, žádná discovery. Ta
 celého OIDC providera (autorizace + token + JWKS) a vlastní `id_token` poskládat sám z dat, která
 vrátí Seznam API — [seznam/](seznam/).
 
-## Další nečekaná zeď: MojeID vyžaduje smlouvu?
-
-Ne. V dřívějším pátrání jsem narazil na formulaci, že přihlášení přes MojeID vyžaduje podepsanou
-smlouvu s CZ.NIC — to platí jen pro tzv. **plný přístup** (placený, 1 000 Kč/rok). Existuje i
-**omezený přístup**, který je zdarma a nevyžaduje žádnou samostatnou písemnou smlouvu, jen registraci
-klienta na <https://mojeid.cz/consumer_admin/>. V omezeném režimu se defaultně předávají povinné
-položky z registrace — jméno, příjmení, telefon, **e-mail**, adresa. Přesně to, co pro login
-potřebujete. Detaily v [mojeid/README.md](mojeid/README.md).
-
-## Druhá past u MojeID: špatná autentizační metoda
+## Past u MojeID: špatná autentizační metoda
 
 I s registrovaným klientem může výměna kódu za token spadnout na:
 
@@ -59,7 +51,7 @@ V kostce pro oba:
 1. Zaregistrovat klienta (MojeID: `consumer_admin`, Seznam: `vyvojari.seznam.cz/oauth/admin`) s
    redirect URI `https://<váš-team>.cloudflareaccess.com/cdn-cgi/access/callback`.
 2. `git clone`, zkopírovat `wrangler.toml.example` na `wrangler.toml`, vyplnit, `npx wrangler deploy`.
-3. V Cloudflare Zero Trust přidat nový OpenID Connect login method, Auth/Token/Certificate URL
+3. V Cloudflare One dashboardu přidat nový OpenID Connect login method, Auth/Token/Certificate URL
    ukázat na worker (u MojeID jen Auth URL, Token/Certificate zůstávají přímo na `mojeid.cz`).
 4. **Test** v Login methods, pak zapojit do politik konkrétních Access aplikací.
 

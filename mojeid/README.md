@@ -1,7 +1,8 @@
 # MojeID → Cloudflare Access
 
-Tenký Cloudflare Worker, který umožní přihlášení přes **MojeID** v Cloudflare Zero Trust Access.
-Ověřeno funkční (2026-09).
+Tenký Cloudflare Worker, který umožní přihlášení přes **MojeID** v Cloudflare Access, součásti
+platformy [Cloudflare One](https://developers.cloudflare.com/cloudflare-one/) (dřív Cloudflare Zero
+Trust). Funkčnost ověřena (2026-09).
 
 ## Proč je potřeba
 
@@ -23,16 +24,12 @@ pokusí se za něj přilepit svoje vlastní (`client_id`, `redirect_uri`, ...) a
 dopíše za běhu. **Token endpoint i JWKS zůstávají přímo na `mojeid.cz`** — worker nikdy nevidí ani
 nezná client secret, jen přesměrovává. Žádné úložiště, žádné závislosti.
 
-## Krok 1 — registrace klienta u MojeID (zdarma, bez smlouvy)
-
-Než začnete: existuje mýtus, že přihlášení přes MojeID vyžaduje placenou smlouvu s CZ.NIC. Platí to
-jen pro tzv. **plný přístup**. Pro obyčejné přihlašování stačí **omezený přístup**, který je zdarma a
-nevyžaduje žádnou samostatnou písemnou smlouvu — jen registraci klienta.
+## Krok 1 — registrace klienta u MojeID
 
 1. Přihlaste se na <https://mojeid.cz/consumer_admin/> → **Založení nové služby**.
 2. **Název klienta**: cokoliv popisného.
 3. **Seznam URI**: `https://<váš-team>.cloudflareaccess.com/cdn-cgi/access/callback`
-   (zjistíte v Zero Trust → Settings → Custom Pages, sekce team domain).
+   (zjistíte v Cloudflare One dashboardu → Settings → Custom Pages, sekce team domain).
 4. Uložit → v seznamu vznikne **ID klienta**. Přes odkaz **Aktualizovat** otevřete detail —
    **Tajemství klienta** je na posledním řádku formuláře.
 5. **Důležité:** na téže stránce najděte **Přihlašovací metoda pro token endpoint** a přepněte ji na
@@ -47,7 +44,7 @@ Testovací instance pro vyzkoušení předem: <https://mojeid.regtest.nic.cz/con
 
 ## Krok 2 — přidat MojeID jako IdP do Cloudflare
 
-Zero Trust dashboard → **Settings → Authentication → Login methods → Add new → OpenID Connect**:
+Cloudflare One dashboard → **Settings → Authentication → Login methods → Add new → OpenID Connect**:
 
 | Pole | Hodnota |
 |---|---|

@@ -1,7 +1,10 @@
 # Seznam.cz → Cloudflare Access
 
-Cloudflare Worker, který umožní přihlášení přes účet **Seznam.cz** v Cloudflare Zero Trust Access.
-Ověřeno funkční (2026-09).
+Cloudflare Worker, který umožní přihlášení přes účet **Seznam.cz** v Cloudflare Access, součásti
+platformy [Cloudflare One](https://developers.cloudflare.com/cloudflare-one/) (dřív Cloudflare Zero
+Trust). Na rozdíl od [MojeID varianty](../mojeid/) zatím prakticky neotestováno end-to-end — princip
+(vlastní podepsaný `id_token`) je ale stejný jako u ověřeně funkčního
+[Erisa/discord-oidc-worker](https://github.com/Erisa/discord-oidc-worker).
 
 ## Proč je potřeba
 
@@ -21,7 +24,7 @@ pro strukturu tohoto workeru.
 
 1. Přihlaste se na <https://vyvojari.seznam.cz/oauth/admin> a přidejte novou službu.
 2. **redirect_uri**: `https://<váš-team>.cloudflareaccess.com/cdn-cgi/access/callback`
-   (zjistíte v Zero Trust → Settings → Custom Pages, sekce team domain) — to je redirect URI
+   (zjistíte v Cloudflare One dashboardu → Settings → Custom Pages, sekce team domain) — to je redirect URI
    **workeru vůči Cloudflare**; worker při přesměrování na Seznam pošle tuhle stejnou hodnotu jako
    svůj vlastní `redirect_uri` pro Seznam.
 3. Po uložení vznikne **ID klienta** a **OAuth tajemství**.
@@ -60,7 +63,7 @@ npx wrangler deploy
 
 ## Krok 3 — přidat Seznam jako IdP do Cloudflare
 
-Zero Trust dashboard → **Settings → Authentication → Login methods → Add new → OpenID Connect**:
+Cloudflare One dashboard → **Settings → Authentication → Login methods → Add new → OpenID Connect**:
 
 | Pole | Hodnota |
 |---|---|
