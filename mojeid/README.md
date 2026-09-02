@@ -30,14 +30,11 @@ nezná client secret, jen přesměrovává. Žádné úložiště, žádné záv
 2. **Název klienta**: cokoliv popisného.
 3. **Seznam URI**: `https://<váš-team>.cloudflareaccess.com/cdn-cgi/access/callback`
    (zjistíte v Cloudflare One dashboardu → Settings → Custom Pages, sekce team domain).
-4. Uložit → v seznamu vznikne **ID klienta**. Přes odkaz **Aktualizovat** otevřete detail —
+4. **Přihlašovací metoda pro token endpoint**: "Základní HTTP autentifikace". Důležité, protože jinak
+   dostanete `Failed to exchange code for token. Make sure the client secret is correct`,
+   i když je secret správně (MojeID žádost jen odmítne dřív, než se dostane ke kontrole kódu).
+5. Uložit → v seznamu vznikne **ID klienta**. Přes odkaz **Aktualizovat** otevřete detail —
    **Tajemství klienta** je na posledním řádku formuláře.
-5. **Důležité:** na téže stránce najděte **Přihlašovací metoda pro token endpoint** a přepněte ji na
-   variantu s HTTP hlavičkou (ne defaultní *"Přihlašovací údaje v těle požadavku"*). Cloudflare posílá
-   `client_secret` k token endpointu přes **HTTP Basic autentizaci** — pokud klient zůstane nastavený
-   na `client_secret_post`, dostanete `Failed to exchange code for token. Make sure the client secret
-   is correct`, i když je secret správně (MojeID žádost jen odmítne dřív, než se dostane ke kontrole
-   kódu).
 
 Testovací instance pro vyzkoušení předem: <https://mojeid.regtest.nic.cz/consumer_admin/>
 (stejný postup, endpointy na `mojeid.regtest.nic.cz`).
@@ -72,14 +69,14 @@ npx wrangler login   # jen poprvé, otevře prohlížeč
 npx wrangler deploy
 ```
 
-Výstup ukáže URL workeru, typicky `https://mojeid-oidc-cloudflare-access-proxy.<váš-subdomain>.workers.dev`.
+Výstup ukáže URL workeru, typicky `https://mojeid-oidc-cloudflare-access-proxy.<vaše-subdomain>.workers.dev`.
 
 ## Krok 4 — přepnout Cloudflare na worker
 
 Zpátky v Login methods → MojeID → upravit **jen Auth URL**:
 
 ```
-https://mojeid-oidc-cloudflare-access-proxy.<váš-subdomain>.workers.dev/mojeid/authorize
+https://mojeid-oidc-cloudflare-access-proxy.<vaše-subdomain>.workers.dev/mojeid/authorize
 ```
 
 Token URL a Certificate URL nechte beze změny na `mojeid.cz`. Uložit → **Test** → očekávaný výsledek:
