@@ -1,0 +1,6 @@
+name = "mojeid-oidc-cloudflare-access-proxy"
+main = "src/index.js"
+compatibility_date = "2026-08-30"
+
+[vars]
+MOJEID_CLIENT_ID = "ID_KLIENTA_Z_MOJEID_CONSUMER_ADMIN"

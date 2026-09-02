@@ -1,0 +1,16 @@
+{
+  "name": "seznam-oidc-cloudflare-access-shim",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "dependencies": {
+    "jose": "^5.9.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.90.0"
+  }
+}
