@@ -16,7 +16,7 @@ OpenID Connect** — nevydává žádný `id_token`, nemá JWKS, nemá ani disco
 mluví se Seznamem přes jeho OAuth2 API a z odpovědi `/api/v1/user` poskládá vlastní podepsaný
 `id_token`. Stejný princip používají existující projekty na napojení Discordu do Cloudflare Access,
 např. [Erisa/discord-oidc-worker](https://github.com/Erisa/discord-oidc-worker) — odtud i inspirace
-pro strukturu tohoto workeru.
+pro strukturu tohoto workera.
 
 ## Krok 1 — registrace služby u Seznamu
 
