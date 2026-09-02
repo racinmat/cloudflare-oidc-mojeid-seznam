@@ -2,9 +2,7 @@
 
 Cloudflare Worker, který umožní přihlášení přes účet **Seznam.cz** v Cloudflare Access, součásti
 platformy [Cloudflare One](https://developers.cloudflare.com/cloudflare-one/) (dřív Cloudflare Zero
-Trust). Na rozdíl od [MojeID varianty](../mojeid/) zatím prakticky neotestováno end-to-end — princip
-(vlastní podepsaný `id_token`) je ale stejný jako u ověřeně funkčního
-[Erisa/discord-oidc-worker](https://github.com/Erisa/discord-oidc-worker).
+Trust). Funkčnost ověřena end-to-end (2026-09).
 
 ## Proč je potřeba
 
